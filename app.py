@@ -34,7 +34,7 @@ def get_user_page():
         return 'User updated'
 
 
-@app.route('user/funds', methods=['GET', 'POST'])
+@app.route('/user/funds', methods=['GET', 'POST'])
 def get_funds_page():
     if request.method == 'GET':
         return 'Welcome to your funds page'

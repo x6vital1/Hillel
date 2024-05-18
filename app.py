@@ -1,17 +1,20 @@
 from flask import Flask, request
+from database_utils import SQLiteDatabase
 
 app = Flask(__name__)
 
 
 @app.get('/')
 def index():
-    return 'Welcome to the main page!'
+    pass
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def get_register_page():
     if request.method == 'GET':
-        return 'Welcome to the registration page'
+        with SQLiteDatabase('base.db') as db:
+            res = db.fetch_all('SELECT * FROM users')
+            return {'users': res}
     else:
         return 'Registration success'
 
@@ -19,7 +22,22 @@ def get_register_page():
 @app.route('/login', methods=['GET', 'POST'])
 def get_login_page():
     if request.method == 'GET':
-        return 'Welcome to the login page'
+        return """
+        <form action="/register" method="post">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" placeholder="Username"><br>
+            <br>
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" placeholder="Password"><br>
+            <br>
+            <label for="birthday">Дата рождения:</label>
+            <input type="date" name='birthday' placeholder="Birthday"><br>
+            <br>
+            <label for="phone">Телефон:</label>
+            <input type="text" name='phone' placeholder="+380(__)___-__-__">
+        </form>
+        
+        """
     else:
         return 'Login success'
 
@@ -123,4 +141,4 @@ def get_loyalty_program_page(fitness_center_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

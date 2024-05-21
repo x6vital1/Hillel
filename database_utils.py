@@ -14,8 +14,8 @@ class SQLiteDatabase:
         self.connection = None
 
     def __enter__(self):
-        con = self.connection = sqlite3.connect(self.db_path)
-        con.row_factory = dict_factory
+        self.connection = sqlite3.connect(self.db_path)
+        self.connection.row_factory = dict_factory
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):

@@ -64,7 +64,6 @@ def get_login_page():
         password = form_data.get('password')
         with SQLiteDatabase('base.db') as db:
             user = db.fetch_one('SELECT * FROM users WHERE login = ? AND password = ?', (user_name, password))
-            print(user)
             if user:
                 return 'Login success'
             else:

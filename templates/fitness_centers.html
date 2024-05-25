@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Контакты</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for fitness_center in fitness_centers %}
+        <tr>
+            <th scope="row">{{ fitness_center.id }}</th>
+            <td>{{ fitness_center.name }}</td>
+            <td>{{ fitness_center.address }}</td>
+            <td>{{ fitness_center.contacts }}</td>
+            <td>
+                <a href="/fitness_center/{{ fitness_center.id }}" class="btn btn-primary btn-sm">Подробнее</a>
+                <a href="/fitness_center/{{ fitness_center.id }}/trainers" class="btn btn-warning btn-sm">Тренера</a>
+                <a href="/fitness_center/{{ fitness_center.id }}/services" class="btn btn-danger btn-sm">Сервисы</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

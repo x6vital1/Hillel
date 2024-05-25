@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<form action="/login" method="post">
+    <div class="container">
+        <label for="username" class="form-label">Имя пользователя:</label>
+        <input type="text" class="form-control mb-3" id="username" name="username" placeholder="Имя пользователя">
+        <label for="password" class="form-label">Пароль:</label>
+        <input type="password" class="form-control mb-3" id="password" name="password" placeholder="Пароль">
+        <button type="submit" class="btn btn-primary w-100">Вход</button>
+    </div>
+</form>
+{% endblock %}

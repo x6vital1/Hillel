@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+    {% if rating %}
+    {% for item in rating %}
+    <div class="alert alert-primary mb-3">
+        <h4 class="alert-heading">Имя тренера: {{ item.trainer_name }}</h4>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Имя пользователя: {{ item.user_name }}</li>
+            <li class="list-group-item">Оценка: {{ item.points }}</li>
+            <li class="list-group-item">Комментарий: {{ item.text }}</li>
+        </ul>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="container">
+    <form action="/fitness_center/{{ fitness_center_id }}/trainers/{{ trainer_id }}/rating" method="post">
+        <div class="form-group mb-3">
+            <label for="points" class="form-label">Оценка:</label>
+            <select class="form-control" name="points" id="points">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name" class="form-label">Ваше имя:</label>
+            <input type="text" class="form-control" name="name" id="name">
+        </div>
+        <div class="form-group">
+            <label for="text" class="form-label">Комментарий:</label>
+            <textarea class="form-control" name="text" id="text" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mt-3">Отправить</button>
+    </form>
+</div>
+{% endblock %}

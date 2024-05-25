@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<form action="/register" method="post">
+    <div class="container">
+        <label for="username" class="form-label">Имя пользователя:</label>
+        <input type="text" class="form-control mb-3" id="username" name="username" placeholder="Имя пользователя">
+        <label for="password" class="form-label">Пароль:</label>
+        <input type="password" class="form-control mb-3" id="password" name="password" placeholder="Пароль">
+        <label for="birthday" class="form-label">Дата рождения:</label>
+        <input type="date" class="form-control mb-3" id="birthday" name="birthday" placeholder="Дата рождения">
+        <label for="phone" class="form-label">Телефон:</label>
+        <input type="text" class="form-control mb-3" id="phone" name="phone" placeholder="+38 (099) 999-99-99">
+        <button type="submit" class="btn btn-primary w-100">Регистрация</button>
+    </div>
+</form>
+{% endblock %}

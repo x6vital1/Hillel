@@ -23,7 +23,8 @@ class SQLiteDatabase:
         if self.connection:
             self.connection.close()
 
-    def select(self, table_name: str, method: str, conditions: Optional[Dict] = None, columns: Optional[List] = None,
+    def select(self, table_name: str, method: str, conditions: Optional[Dict[str, Any]] = None,
+               columns: Optional[List[str]] = None,
                join_conditions: Optional[Dict[str, Dict[str, Any]]] = None) -> Dict[str, Any]:
         """
         Выборка данных из базы данных

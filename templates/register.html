@@ -1,16 +1,56 @@
 {% extends "base.html" %}
 {% block body %}
-<form action="/register" method="post">
-    <div class="container">
-        <label for="username" class="form-label">Имя пользователя:</label>
-        <input type="text" class="form-control mb-3" id="username" name="username" placeholder="Имя пользователя">
-        <label for="password" class="form-label">Пароль:</label>
-        <input type="password" class="form-control mb-3" id="password" name="password" placeholder="Пароль">
-        <label for="birthday" class="form-label">Дата рождения:</label>
-        <input type="date" class="form-control mb-3" id="birthday" name="birthday" placeholder="Дата рождения">
-        <label for="phone" class="form-label">Телефон:</label>
-        <input type="text" class="form-control mb-3" id="phone" name="phone" placeholder="+38 (099) 999-99-99">
-        <button type="submit" class="btn btn-primary w-100">Регистрация</button>
+    <div class="box">
+        <form action="/register" method="post">
+            <div class="container">
+            <div class="field">
+                <label for="username" class="label">Имя пользователя:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="username" name="username"
+                           placeholder="Логин">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                        </span>
+                </div>
+            </div>
+            <div class="field">
+                <label for="password" class="label">Пароль:</label>
+                <div class="control has-icons-left">
+                    <input type="password" class="input" id="password" name="password"
+                           placeholder="Пароль">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                        </span>
+                </div>
+            </div>
+            <div class="field">
+                <label for="birthday" class="label">Дата рождения:</label>
+                <div class="control has-icons-left">
+                    <input type="date" class="input" id="birthday" name="birthday">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-calendar"></i>
+                        </span>
+                </div>
+            </div>
+            <div class="field">
+                <label for="phone" class="label">Телефон:</label>
+                <div class="control has-icons-left">
+                    <input type="text" class="input" id="phone" name="phone"
+                           placeholder="+38(099)123-45-67">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-phone"></i>
+                        </span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control has-text-centered">
+                    <button type="submit" class="button is-primary mt-3">
+                        <span class="icon"><i class="fas fa-user-plus"></i></span>
+                        <span>Зарегистрироваться</span>
+                    </button>
+                </div>
+            </div>
     </div>
-</form>
+    </form>
+    </div>
 {% endblock %}

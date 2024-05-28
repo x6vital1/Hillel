@@ -161,7 +161,7 @@ def get_trainer_rating_page(fitness_center_id, trainer_id):
             rating = db.select(table_name='reviews', method='fetchall',
                                conditions={'trainer_id': trainer_id, 'fitness_center_id': fitness_center_id},
                                columns=['trainers.name AS trainer_name', 'reviews.points', 'reviews.user_name',
-                                        'reviews.text'],
+                                        'reviews.text', 'reviews.id AS review_id'],
                                join_conditions={'trainers': {'reviews.trainer_id': 'trainers.id'}}
                                )
             return render_template('rating.html', title='Рейтинг', rating=rating, fitness_center_id=fitness_center_id,

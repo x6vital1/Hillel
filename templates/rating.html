@@ -3,41 +3,67 @@
     <div class="container">
         {% if rating %}
             {% for item in rating %}
-                <div class="card text-white bg-primary mb-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">{{ item.trainer_name }}</h5>
-                        <hr class="text-white">
-                        <p class="card-text">Отзыв: {{ item.text}}</p>
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">Отзыв #{{ item.review_id }}</p>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Оценка: {{ item.points }}</li>
-                        <li class="list-group-item">Отправитель: {{ item.user_name }}</li>
-                    </ul>
+                    <div class="card-content">
+                        <div class="control">
+                            <p>От кого: {{ item.user_name }}</p>
+                            <p>Отзыв: {{ item.text }}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p class="card-footer-item">Оценка: {{ item.points }}</p>
+                        <p class="card-footer-item">Тренер: {{ item.trainer_name }}</p>
+                    </div>
                 </div>
             {% endfor %}
         {% endif %}
     </div>
-    <div class="container">
+    <div class="box mt-5">
         <form action="/fitness_center/{{ fitness_center_id }}/trainers/{{ trainer_id }}/rating" method="post">
-            <div class="form-group mb-3">
-                <label for="points" class="form-label">Оценка:</label>
-                <select class="form-control" name="points" id="points">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+            <div class="field">
+                <div class="control has-icons-left">
+                    <span class="select">
+                        <select name="points" id="points">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-star"></i>
+                    </span>
+
+                </div>
             </div>
-            <div class="form-group">
-                <label for="name" class="form-label">Ваше имя:</label>
-                <input type="text" class="form-control" name="name" id="name">
+            <div class="field">
+                <label for="name" class="label">Ваше имя:</label>
+                <div class="control has-icons-left">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                <input type="text" class="input" name="name" id="name" placeholder="Ваше имя">
+                </div>
             </div>
-            <div class="form-group">
+            <div class="field">
                 <label for="text" class="form-label">Комментарий:</label>
-                <textarea class="form-control" name="text" id="text" rows="3"></textarea>
+                <div class="control has-icons-right">
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-comment"></i>
+                    </span>
+                <textarea class="textarea" name="text" id="text" rows="3" placeholder="Комментарии"></textarea>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100 mt-3">Отправить</button>
+            <div class="field">
+                <button type="submit" class="button is-link is-small">
+                    <span class="icon"><i class="fas fa-paper-plane"></i></span>
+                    <span>Отправить</span>
+                </button>
+            </div>
         </form>
     </div>
 {% endblock %}

@@ -1,56 +1,29 @@
 {% extends "base.html" %}
 {% block body %}
-    <div class="box">
+    <div class="container" style="width: 40%">
         <form action="/register" method="post">
-            <div class="container">
-            <div class="field">
-                <label for="username" class="label">Имя пользователя:</label>
-                <div class="control has-icons-left">
-                    <input type="text" class="input" id="username" name="username"
-                           placeholder="Логин">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                        </span>
-                </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="username"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control" name="username" placeholder="Имя пользователя"
+                       aria-label="Имя пользователя"
+                       aria-describedby="username">
             </div>
-            <div class="field">
-                <label for="password" class="label">Пароль:</label>
-                <div class="control has-icons-left">
-                    <input type="password" class="input" id="password" name="password"
-                           placeholder="Пароль">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                        </span>
-                </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="password"><i class="fas fa-key"></i></span>
+                <input type="password" class="form-control" name="password" placeholder="Пароль" aria-label="Пароль"
+                       aria-describedby="password">
             </div>
-            <div class="field">
-                <label for="birthday" class="label">Дата рождения:</label>
-                <div class="control has-icons-left">
-                    <input type="date" class="input" id="birthday" name="birthday">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-calendar"></i>
-                        </span>
-                </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="birthday"><i class="fas fa-calendar"></i></span>
+                <input type="date" class="form-control" name="birthday" placeholder="Дата рождения" aria-label="Дата рождения"
+                       aria-describedby="birthday">
             </div>
-            <div class="field">
-                <label for="phone" class="label">Телефон:</label>
-                <div class="control has-icons-left">
-                    <input type="text" class="input" id="phone" name="phone"
-                           placeholder="+38(099)123-45-67">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-phone"></i>
-                        </span>
-                </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="phone"><i class="fas fa-phone"></i></span>
+                <input type="text" class="form-control" placeholder="+38 (XXX) XXX - XX - XX" aria-label="Телефон"
+                       aria-describedby="phone">
             </div>
-            <div class="field">
-                <div class="control has-text-centered">
-                    <button type="submit" class="button is-primary mt-3">
-                        <span class="icon"><i class="fas fa-user-plus"></i></span>
-                        <span>Зарегистрироваться</span>
-                    </button>
-                </div>
-            </div>
-    </div>
-    </form>
+            <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+        </form>
     </div>
 {% endblock %}

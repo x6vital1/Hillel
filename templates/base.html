@@ -3,43 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
           integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <title>{% if title %}{{ title }}{% else %}Fitness center{% endif %}</title>
 </head>
 <body>
-<header class="header">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-               data-target="mainNavbar">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-        <div id="mainNavbar" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="/">
-                    Главная
-                </a>
-                <a class="navbar-item" href="/fitness_centers">
-                    Фитнес центры
-                </a>
-                <a class="navbar-item" href="/register">
-                    Регистрация
-                </a>
-                <a class="navbar-item" href="/login">
-                    Вход
-                </a>
+<header class="mb-5">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">FITNESS CENTER</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/fitness_centers">
+                            <span><i class="fas fa-dumbbell"></i></span>
+                            <span>Фитнес центры</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/reservations">
+                            <span><i class="fas fa-calendar-check"></i></span>
+                            <span>Мои бронирования</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">
+                            <span><i class="fas fa-user-plus"></i></span>
+                            <span>Регистрация</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">
+                            <span><i class="fas fa-sign-in-alt"></i></span>
+                            <span>Вход</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 </header>
-<section class="section">
+<main>
     {% block body %}{% endblock %}
-</section>
+</main>
 </body>
 </html>

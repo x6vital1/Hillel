@@ -67,3 +67,16 @@ class SQLiteDatabase:
         cursor = self.connection.cursor()
         cursor.execute(query)
         self.connection.commit()
+
+    def update(self, table_name: str, data: Dict[str, Any], conditions: Dict[str, Any]):
+        update_conditions = []
+        if conditions is not None:
+            for key, value in conditions.items():
+                update_conditions.append(f"{key} = '{value}'")
+        update_values = []
+        for key, value in data.items():
+            update_values.append(f"{key} = '{value}'")
+        query = f'UPDATE {table_name} SET {", ".join(update_values)} WHERE {" AND ".join(update_conditions)}'
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        self.connection.commit()

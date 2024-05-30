@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="container mb-5 text-center">
+                <h3>{{ services[0].fitness_center_name }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {% for service in services %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Название: {{ service.service_name }}</h5>
+                            <p class="card-text">Описание: {{ service.description }}</p>
+                            <p class="card-text">Цена: {{ service.price }} грн</p>
+                            <p class="card-text">Кол-во мест: {{ service.max_attendees }}</p>
+                            <p class="card-text">Длительность: {{ service.duration * 60 }} мин</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-6">
+                <form action="/user/reservations" method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="res_date"><i class="fas fa-calendar"></i></span>
+                        <input type="date" class="form-control" aria-describedby="res_date" name="date">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="res_time"><i class="fas fa-clock"></i></span>
+                        <input type="time" class="form-control" aria-describedby="res_time" name="time">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="service_id"><i class="fas fa-file-signature"></i></span>
+                        <select class="form-select" aria-describedby="service_id" name="service_id">
+                            {% for service in services %}
+                                <option value="{{ service.service_id }}">{{ service.service_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

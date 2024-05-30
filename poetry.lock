@@ -88,6 +88,21 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-login"
+version = "0.6.3"
+description = "User authentication and session management for Flask."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Flask-Login-0.6.3.tar.gz", hash = "sha256:5e23d14a607ef12806c699590b89d0f0e0d67baeec599d75947bf9c147330333"},
+    {file = "Flask_Login-0.6.3-py3-none-any.whl", hash = "sha256:849b25b82a436bf830a054e74214074af59097171562ab10bfa999e6b78aae5d"},
+]
+
+[package.dependencies]
+Flask = ">=1.0.4"
+Werkzeug = ">=1.0.1"
+
+[[package]]
 name = "itsdangerous"
 version = "2.2.0"
 description = "Safely pass data to untrusted environments and back."
@@ -325,4 +340,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "37600a10d116e5c6c310f236937da81e187e04fbde641779d0ba2beff695619a"
+content-hash = "542e9f2636c0283a9a3a00426bd13f32a3a25f07e83e8ed49b44fab821375a0e"

@@ -1,69 +1,48 @@
 {% extends "base.html" %}
 {% block body %}
     <div class="container">
-        {% if rating %}
-            {% for item in rating %}
-                <div class="card">
-                    <div class="card-header">
-                        <p class="card-header-title">Отзыв #{{ item.review_id }}</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="control">
-                            <p>От кого: {{ item.user_name }}</p>
-                            <p>Отзыв: {{ item.text }}</p>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <p class="card-footer-item">Оценка: {{ item.points }}</p>
-                        <p class="card-footer-item">Тренер: {{ item.trainer_name }}</p>
-                    </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="container">
+                    {% if rating %}
+                        {% for item in rating %}
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary">
+                                    <h5>Отзыв №{{ item.review_id }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Имя тренера: {{ item.trainer_name }}</h5>
+                                    <p class="card-text">Отправитель: {{ item.user_name }}</p>
+                                    <p class="card-text">Отзыв: {{ item.text }}</p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <span>Оценка: {{ item.points }}</span>
+                                    <span class="icon"><i class="fas fa-star"></i></span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div class="box mt-5">
-        <form action="/fitness_center/{{ fitness_center_id }}/trainers/{{ trainer_id }}/rating" method="post">
-            <div class="field">
-                <div class="control has-icons-left">
-                    <span class="select">
-                        <select name="points" id="points">
+            </div>
+            <div class="col-6">
+                <form action="/fitness_center/{{ fitness_center_id }}/trainers/{{ trainer.id }}/rating" method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="points"><i class="fas fa-star"></i></span>
+                        <select class="form-select" aria-describedby="points" name="points">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
-                    </span>
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-star"></i>
-                    </span>
-
-                </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="text" class="form-label">Отзыв на тренера: <b>{{ trainer.name }}</b></label>
+                        <textarea class="form-control" id="text" name="text">{% if user_review %}{{ user_review.text }}{% endif %}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Отправить</button>
+                </form>
             </div>
-            <div class="field">
-                <label for="name" class="label">Ваше имя:</label>
-                <div class="control has-icons-left">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                    </span>
-                <input type="text" class="input" name="name" id="name" placeholder="Ваше имя">
-                </div>
-            </div>
-            <div class="field">
-                <label for="text" class="form-label">Комментарий:</label>
-                <div class="control has-icons-right">
-                    <span class="icon is-small is-right">
-                        <i class="fas fa-comment"></i>
-                    </span>
-                <textarea class="textarea" name="text" id="text" rows="3" placeholder="Комментарии"></textarea>
-                </div>
-            </div>
-            <div class="field">
-                <button type="submit" class="button is-link is-small">
-                    <span class="icon"><i class="fas fa-paper-plane"></i></span>
-                    <span>Отправить</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 {% endblock %}

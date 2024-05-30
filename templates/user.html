@@ -1,18 +1,29 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h3>{{ user.login }}</h3>
-        </div>
-        <div class="card-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">День рождения: {{ user.birth_date }}</li>
-                <li class="list-group-item">Средства: {{ user.funds }}</li>
-                <li class="list-group-item">Телефон: {{ user.phone }}</li>
-            </ul>
+    <style>
+        .user-border {
+            border-radius: 15px !important;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+        }
+    </style>
+    <div class="container" style="width: 40%;">
+        <div class="card user-border">
+            <div class="card-header">
+                <h4>Личный кабинет</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Имя: {{ user.login }}</h5>
+                <p class="card-text">День рождения: {{ user.birth_date }}</p>
+                <p class="card-text">Телефон: {{ user.phone }}</p>
+                <p class="card-text">Средства: {{ user.funds }} грн</p>
+            </div>
+            <div class="card-footer">
+                <a href="/user/reservations" class="btn btn-primary">
+                    <span><i class="fas fa-list"></i></span>
+                    <span>Мои бронирования</span>
+                </a>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

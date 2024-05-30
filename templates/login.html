@@ -1,38 +1,19 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <div class="box">
-        <div class="container">
-            <form action="/login" method="post">
-                <div class="field">
-                    <label for="username" class="label">Имя пользователя:</label>
-                    <p class="control has-icons-left">
-                    <input type="text" class="input" id="username" name="username"
-                           placeholder="Имя пользователя">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <label for="password" class="label">Пароль:</label>
-                    <p class="control has-icons-left">
-                    <input type="password" class="input" id="password" name="password" placeholder="Пароль">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <div class="control">
-                    <button type="submit" class="button is-primary is-small">
-                        <span class="icon"><i class="fas fa-sign-in-alt"></i></span>
-                        <span>Войти</span>
-                    </button>
-                    </div>
-                </div>
-            </form>
+    <form method="post" action="/login">
+    <div class="container" style="width: 50%">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="username"><i class="fas fa-user"></i></span>
+            <input type="text" class="form-control" name="username" placeholder="Имя пользователя" aria-label="Имя пользователя"
+                   aria-describedby="username">
         </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="password"><i class="fas fa-key"></i></span>
+            <input type="password" class="form-control" name="password" placeholder="Пароль" aria-label="Пароль"
+                   aria-describedby="password">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Вход</button>
     </div>
-
+    </form>
 {% endblock %}

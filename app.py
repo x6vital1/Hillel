@@ -1,10 +1,14 @@
 from functools import wraps
+from dotenv import load_dotenv
+import os
 
 from flask import Flask, request, render_template, redirect, session
 from Project_utils import SQLiteDatabase
 
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = 'dsdsdds'
+app.secret_key = os.getenv('SECRET_KEY')
 
 
 def login_required(func):
@@ -33,7 +37,7 @@ def get_register_page():
             password = form_data.get('password')
             birthday = form_data.get('birthday')
             phone = form_data.get('phone')
-            db.commit('users', {'login': user_name, 'password': password, 'birth_date': birthday, 'phone': phone})
+            db.insert('users', {'login': user_name, 'password': password, 'birth_date': birthday, 'phone': phone})
 
         return 'Registration success'
 
@@ -108,7 +112,7 @@ def get_reservations_page():
         date = form_data.get('date')
         time = form_data.get('time')
         with SQLiteDatabase('base.db') as db:
-            db.commit('reservations', {'user_id': user['id'], 'service_id': service_id, 'date': date, 'time': time})
+            db.insert('reservations', {'user_id': user['id'], 'service_id': service_id, 'date': date, 'time': time})
         return redirect('/user/reservations')
 
 
@@ -250,4 +254,4 @@ def get_loyalty_program_page(fitness_center_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

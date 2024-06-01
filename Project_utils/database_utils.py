@@ -25,7 +25,7 @@ class SQLiteDatabase:
 
     def select(self, table_name: str, method: str, conditions: Optional[Dict[str, Any]] = None,
                columns: Optional[List[str]] = None,
-               join_conditions: Optional[Dict[str, Dict[str, Any]]] = None) -> Dict[str, Any]:
+               join_conditions: Optional[Dict[str, Dict[str, Any]]] = None):
         """
         Выборка данных из базы данных
         :param table_name: Название талицы. Например: 'users'
@@ -60,7 +60,7 @@ class SQLiteDatabase:
             result = cursor.fetchall()
             return result
 
-    def commit(self, table_name: str, data: Dict[str, Any]):
+    def insert(self, table_name: str, data: Dict[str, Any]):
         columns = ', '.join(data.keys())
         values = tuple(data.values())
         query = f'INSERT INTO {table_name} ({columns}) VALUES {values}'

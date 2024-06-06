@@ -8,40 +8,35 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
-                {% for service in services %}
-                    <div class="card mb-3">
+            {% for service in services %}
+                <div class="col-6">
+                    <div class="card mb-3 border-dark">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title text-center">{{ service.service_name }}</h5>
+                    </div>
                         <div class="card-body">
-                            <h5 class="card-title">Название: {{ service.service_name }}</h5>
-                            <p class="card-text">Описание: {{ service.description }}</p>
-                            <p class="card-text">Цена: {{ service.price }} грн</p>
-                            <p class="card-text">Кол-во мест: {{ service.max_attendees }}</p>
-                            <p class="card-text">Длительность: {{ service.duration }} мин</p>
+                            <div class="row">
+                                <p class="card-text">Описание: {{ service.description }}</p>
+                                <p class="card-text">Цена: {{ service.price }} грн</p>
+                                <p class="card-text">Длительность: {{ service.duration }} мин</p>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <h5 class="card-title text-center mb-3">Тренера</h5>
+                            <div class="container text-center">
+                                {% for service_id, trainers in trainer_services.items() %}
+                                    {% if service_id == service.service_id %}
+                                        {% for trainer_id, trainer_name in trainers.items() %}
+                                            <a class="btn btn-outline-dark w-75 mb-3" href="/fitness_center/{{ service.fitness_center_id }}/trainers/{{ trainer_id }}/{{ service_id }}">{{ trainer_name }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="col-6">
-                <form action="/user/reservations" method="post">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="res_date"><i class="fas fa-calendar"></i></span>
-                        <input type="date" class="form-control" aria-describedby="res_date" name="date">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="res_time"><i class="fas fa-clock"></i></span>
-                        <input type="time" class="form-control" aria-describedby="res_time" name="time">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="service_id"><i class="fas fa-file-signature"></i></span>
-                        <select class="form-select" aria-describedby="service_id" name="service_id">
-                            {% for service in services %}
-                                <option value="{{ service.service_id }}">{{ service.service_name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Добавить</button>
-                </form>
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

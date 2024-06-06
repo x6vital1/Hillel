@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title text-center">Информация о тренере</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center mb-3">{{ trainer.fitness_center_name }}</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="card-text">Имя: {{ trainer.trainer_name }}</p>
+                                <p class="card-text">Возраст: {{ trainer.age }}</p>
+                                <p class="card-text">Пол: {{ trainer.gender }}</p>
+                            </div>
+                            <div class="col-6">
+                                <form method="post">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        <select class="form-select" name="date">
+                                            {% for item in trainer_schedule %}
+                                                <option value="{{ item.date }}">{{ item.date }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 mt-3">Показать расписание
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <form action="/user/reservations" method="post">
+                    <input type="hidden" name="trainer_id" value="{{ trainer.id }}">
+                    <input type="hidden" name="service_id" value="{{ service_id }}">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title text-center">Доступное время</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if available_time %}
+                                <div class="container">
+                                    <div class="row">
+                                    <input type="hidden" name="date" value="{{ available_time[0].date() }}">
+                                        <select class="form-select" name="time">
+                                            {% for item in available_time %}
+                                                <option value="{{ item.time().strftime('%H:%M') }}">{{ item.time().strftime('%H:%M') }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    <button type="submit" class="btn btn-primary w-100 mt-3">Забронировать</button>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <p class="card-text">Нет доступного времени</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -9,6 +9,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Дата</th>
                 <th scope="col">Время</th>
+                <th scope="col">Тренер</th>
+                <th scope="col">Фитнес центр</th>
                 <th scope="col">Длительность</th>
                 <th scope="col">Название</th>
                 <th scope="col">Действия</th>
@@ -20,6 +22,8 @@
                     <th scope="row">{{ reservation.reservation_id }}</th>
                     <td>{{ reservation.date }}</td>
                     <td>{{ reservation.time }}</td>
+                    <td>{{ reservation.trainer_name }}</td>
+                    <td>{{ reservation.fitness_center_name }}</td>
                     <td>{{ reservation.duration}} мин</td>
                     <td>{{ reservation.service_name }}</td>
                     <td>

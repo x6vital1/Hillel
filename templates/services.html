@@ -11,9 +11,9 @@
             {% for service in services %}
                 <div class="col-6">
                     <div class="card mb-3 border-dark">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title text-center">{{ service.service_name }}</h5>
-                    </div>
+                        <div class="card-header text-light" style="background: #336b86">
+                            <h5 class="card-title text-center">{{ service.name }}</h5>
+                        </div>
                         <div class="card-body">
                             <div class="row">
                                 <p class="card-text">Описание: {{ service.description }}</p>
@@ -23,15 +23,16 @@
                             <hr>
                             <div class="row">
                                 <h5 class="card-title text-center mb-3">Тренера</h5>
-                            <div class="container text-center">
-                                {% for service_id, trainers in trainer_services.items() %}
-                                    {% if service_id == service.service_id %}
-                                        {% for trainer_id, trainer_name in trainers.items() %}
-                                            <a class="btn btn-outline-dark w-75 mb-3" href="/fitness_center/{{ service.fitness_center_id }}/trainers/{{ trainer_id }}/{{ service_id }}">{{ trainer_name }}</a>
+                                <div class="container text-center">
+                                    {% for trainer in trainers %}
+                                        {% for trainer_service in trainer.services %}
+                                            {% if trainer_service.service_id == service.id %}
+                                                    <a class="btn btn-outline-dark w-75 mb-3"
+                                                       href="/fitness_center/{{ trainer.fitness_center_id }}/trainers/{{ trainer.id }}/{{ trainer_service.service_id }}">{{ trainer.name }}</a>
+                                            {% endif %}
                                         {% endfor %}
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>

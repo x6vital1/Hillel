@@ -3,8 +3,8 @@
 {% block body %}
 <div class="container">
         <div class="row">
-            <table class="table table-striped table-bordered border-dark table-sm">
-            <thead class="table-dark">
+            <table class="table table-striped table-bordered border-dark table-sm" style="background: #90afc4">
+            <thead style="background: #336b86">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Дата</th>
@@ -19,15 +19,15 @@
             <tbody>
             {% for reservation in reservations %}
                 <tr>
-                    <th scope="row">{{ reservation.reservation_id }}</th>
+                    <th scope="row">{{ reservation.id }}</th>
                     <td>{{ reservation.date }}</td>
                     <td>{{ reservation.time }}</td>
-                    <td>{{ reservation.trainer_name }}</td>
-                    <td>{{ reservation.fitness_center_name }}</td>
-                    <td>{{ reservation.duration}} мин</td>
-                    <td>{{ reservation.service_name }}</td>
+                    <td>{{ reservation.trainer.name }}</td>
+                    <td>{{ reservation.trainer.fitness_center.name }}</td>
+                    <td>{{ reservation.service.duration }} мин</td>
+                    <td>{{ reservation.service.name }}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="/user/reservations/{{ reservation.reservation_id }}">
+                        <a class="btn btn-primary btn-sm" href="/user/reservations/{{ reservation.id }}">
                             <span class="icon"><i class="fas fa-pen"></i></span>
                             <span>Редактировать</span>
                         </a>

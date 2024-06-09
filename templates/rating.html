@@ -6,13 +6,13 @@
                 <div class="container">
                     {% if rating %}
                         {% for item in rating %}
-                            <div class="card mb-3">
-                                <div class="card-header bg-primary">
-                                    <h5>Отзыв №{{ item.review_id }}</h5>
+                            <div class="card mb-3 border-dark">
+                                <div class="card-header" style="background: #336b86">
+                                    <h5>Отзыв №{{ item.id }}</h5>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Имя тренера: {{ item.trainer_name }}</h5>
-                                    <p class="card-text">Отправитель: {{ item.user_name }}</p>
+                                    <h5 class="card-title">Имя тренера: {{ item.trainer.name }}</h5>
+                                    <p class="card-text">Отправитель: {{ item.user.login }}</p>
                                     <p class="card-text">Отзыв: {{ item.text }}</p>
                                 </div>
                                 <div class="card-footer text-muted">
@@ -26,21 +26,28 @@
             </div>
             <div class="col-6">
                 <form action="/fitness_center/{{ fitness_center_id }}/trainers/{{ trainer.id }}/rating" method="post">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="points"><i class="fas fa-star"></i></span>
-                        <select class="form-select" aria-describedby="points" name="points">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <div class="card border-dark">
+                        <div class="card-header" style="background: #336b86">
+                            <h5>Оценка тренера</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="points"><i class="fas fa-star"></i></span>
+                                <select class="form-select" aria-describedby="points" name="points">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="text" class="form-label">Отзыв на тренера: <b>{{ trainer.name }}</b></label>
+                                <textarea class="form-control" id="text" name="text">{% if user_review %}{{ user_review.text }}{% endif %}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline-dark w-100">Отправить</button>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="text" class="form-label">Отзыв на тренера: <b>{{ trainer.name }}</b></label>
-                        <textarea class="form-control" id="text" name="text">{% if user_review %}{{ user_review.text }}{% endif %}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Отправить</button>
                 </form>
             </div>
         </div>

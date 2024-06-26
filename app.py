@@ -179,7 +179,7 @@ def get_trainer_service_page(fitness_center_id, trainer_id, service_id):
         date = form_data.get('date')
         available_time = Project_utils.get_schedule_slots(trainer_id, service_id, date)
         return render_template('trainer_page.html', title=trainer.name, trainer=trainer,
-                               trainer_schedule=trainer_schedule, available_time=available_time, service_id=service_id)
+                               trainer_schedule=trainer_schedule, available_time=available_time, service_id=service_id, date=date)
 
 
 @app.route('/fitness_center/<int:fitness_center_id>/trainers/<int:trainer_id>/rating', methods=['GET', 'POST'])
@@ -246,4 +246,4 @@ def get_loyalty_program_page(fitness_center_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

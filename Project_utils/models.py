@@ -7,10 +7,11 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
     login = Column(String(50), unique=True, nullable=False)
-    funds = Column(Integer, nullable=False)
+    funds = Column(Integer, nullable=False, default=0)
     password = Column(String(50), nullable=False)
     birth_date = Column(String(50), nullable=False)
     phone = Column(String(50), nullable=False)
+    email = Column(String(50), nullable=False, unique=True)
     reservations = relationship("Reservation", back_populates="user")
     reviews = relationship("Review", back_populates="user")
 

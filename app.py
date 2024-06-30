@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import Project_utils
 from Project_utils.models import *
+from Project_utils.sendmail import send_mail
 
 from flask import Flask, request, render_template, redirect, session, jsonify
 
@@ -37,10 +38,11 @@ def get_register_page():
         password = form_data.get('password')
         birthday = form_data.get('birthday')
         phone = form_data.get('phone')
-        user = User(login=user_name, password=password, birth_date=birthday, phone=phone)
+        email = form_data.get('email')
+        user = User(login=user_name, password=password, birth_date=birthday, phone=phone, email=email)
         Project_utils.db_session.add(user)
         Project_utils.db_session.commit()
-        session['user'] = {'id': user.id, 'login': user.login}
+        session['user'] = {'id': user.id, 'login': user.login, 'email': user.email}
         return redirect('/user')
 
 
@@ -56,7 +58,7 @@ def get_login_page():
         password = form_data.get('password')
         user = Project_utils.db_session.query(User).filter_by(login=user_name, password=password).first()
         if user:
-            session['user'] = {'id': user.id, 'login': user.login}
+            session['user'] = {'id': user.id, 'login': user.login, 'email': user.email}
             return redirect('/user')
         else:
             return 'Login failed'
@@ -109,11 +111,21 @@ def get_reservations_page():
         trainer_id = form_data.get('trainer_id')
         date = form_data.get('date')
         time = form_data.get('time')
-        reservation = Reservation(user_id=user['id'], service_id=int(service_id), trainer_id=int(trainer_id), date=date,
-                                  time=time)
-        Project_utils.db_session.add(reservation)
-        Project_utils.db_session.commit()
-        return redirect('/user/reservations')
+        message_text = (f'Ваше бронирование подтверждено.\n'
+                        f'Сервис: {Project_utils.db_session.query(Service).filter_by(id=service_id).first().name}\n'
+                        f'Тренер: {Project_utils.db_session.query(Trainer).filter_by(id=trainer_id).first().name}\n'
+                        f'Дата: {date}\n'
+                        f'Время: {time}')
+        try:
+            reservation = Reservation(user_id=user['id'], service_id=int(service_id), trainer_id=int(trainer_id),
+                                      date=date,
+                                      time=time)
+            Project_utils.db_session.add(reservation)
+            Project_utils.db_session.commit()
+            send_mail.delay(user['email'], 'Ваше бронирование подтверждено', message_text)
+            return redirect('/user/reservations')
+        except Exception as e:
+            print(f'Error sending email: {e}')
 
 
 @app.route('/user/reservations/<int:reservation_id>', methods=['GET', 'POST'])
@@ -179,7 +191,8 @@ def get_trainer_service_page(fitness_center_id, trainer_id, service_id):
         date = form_data.get('date')
         available_time = Project_utils.get_schedule_slots(trainer_id, service_id, date)
         return render_template('trainer_page.html', title=trainer.name, trainer=trainer,
-                               trainer_schedule=trainer_schedule, available_time=available_time, service_id=service_id, date=date)
+                               trainer_schedule=trainer_schedule, available_time=available_time, service_id=service_id,
+                               date=date)
 
 
 @app.route('/fitness_center/<int:fitness_center_id>/trainers/<int:trainer_id>/rating', methods=['GET', 'POST'])

@@ -3,9 +3,9 @@ from dotenv import load_dotenv
 import os
 import Project_utils
 from Project_utils.models import *
-from Project_utils.sendmail import send_mail
+from sendmail import send_mail
 
-from flask import Flask, request, render_template, redirect, session, jsonify
+from flask import Flask, request, render_template, redirect, session
 
 load_dotenv()
 

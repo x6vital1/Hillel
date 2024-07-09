@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      DB_HOST: database
+      RABBITMQ_HOST: rabbitmq
+
+  db:
+    image: 'postgres'
+    environment:
+      POSTGRES_PASSWORD: postgres
+      RABBITMQ_HOST: rabbitmq
+      DB_HOST: database
+    ports:
+      - 5432:5432
+    hostname: database
+
+  celery_worker:
+    build: .
+    command: celery -A sendmail worker --loglevel=INFO --pool=solo
+    environment:
+      DB_HOST: database
+      RABBITMQ_HOST: rabbitmq
+
+  rabbitmq:
+    image: 'rabbitmq:3.13-management'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    hostname: rabbitmq

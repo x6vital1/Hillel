@@ -6,7 +6,7 @@ import ssl
 
 load_dotenv()
 
-app = Celery('tasks', broker=os.getenv('CELERY_BROKER_URL'))
+app = Celery('tasks', broker=f'pyamqp://guest@{os.getenv("RABBITMQ_HOST", "localhost")}//')
 
 
 @app.task

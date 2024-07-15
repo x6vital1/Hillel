@@ -106,39 +106,62 @@ def get_reservations_page():
         return render_template('reservations.html', title='Мои бронирования', reservations=reservations)
 
     if request.method == 'POST':
+        reservation_id = session.get('reservation_id')
+        reservation = Project_utils.db_session.query(Reservation).filter_by(id=reservation_id).first()
         form_data = request.form
-        service_id = form_data.get('service_id')
-        trainer_id = form_data.get('trainer_id')
-        date = form_data.get('date')
-        time = form_data.get('time')
-        message_text = (f'Ваше бронирование подтверждено.\n'
-                        f'Сервис: {Project_utils.db_session.query(Service).filter_by(id=service_id).first().name}\n'
-                        f'Тренер: {Project_utils.db_session.query(Trainer).filter_by(id=trainer_id).first().name}\n'
-                        f'Дата: {date}\n'
-                        f'Время: {time}')
-        try:
-            reservation = Reservation(user_id=user['id'], service_id=int(service_id), trainer_id=int(trainer_id),
-                                      date=date,
-                                      time=time)
-            Project_utils.db_session.add(reservation)
+        if not reservation:
+            service_id = form_data.get('service_id')
+            trainer_id = form_data.get('trainer_id')
+            date = form_data.get('date')
+            time = form_data.get('time')
+            message_text = (f'Ваше бронирование подтверждено.\n'
+                            f'Сервис: {Project_utils.db_session.query(Service).filter_by(id=service_id).first().name}\n'
+                            f'Тренер: {Project_utils.db_session.query(Trainer).filter_by(id=trainer_id).first().name}\n'
+                            f'Дата: {date}\n'
+                            f'Время: {time}')
+            try:
+                reservation = Reservation(user_id=user['id'], service_id=int(service_id), trainer_id=int(trainer_id),
+                                          date=date,
+                                          time=time)
+                Project_utils.db_session.add(reservation)
+                Project_utils.db_session.commit()
+                send_mail.delay(user['email'], 'Ваше бронирование подтверждено', message_text)
+                return redirect('/user/reservations')
+            except Exception as e:
+                print(f'Error sending email: {e}')
+        else:
+            reservation.date = form_data.get('date')
+            reservation.time = form_data.get('time')
             Project_utils.db_session.commit()
-            send_mail.delay(user['email'], 'Ваше бронирование подтверждено', message_text)
+            session.pop('reservation_id', None)
             return redirect('/user/reservations')
-        except Exception as e:
-            print(f'Error sending email: {e}')
+
 
 
 @app.route('/user/reservations/<int:reservation_id>', methods=['GET', 'POST'])
 @login_required
 def get_reservation_page(reservation_id):
+    user = session.get('user')
     if request.method == 'GET':
         reservation = Project_utils.db_session.query(Reservation).filter_by(id=reservation_id).first()
         if not reservation:
             return 'Reservation not found'
-        return {'id': reservation.id, 'date': reservation.date, 'time': reservation.time,
-                'service_id': reservation.service_id, 'trainer_id': reservation.trainer_id}
+        trainer = Project_utils.db_session.query(Trainer).filter_by(id=reservation.trainer_id).first()
+        trainer_schedule = Project_utils.db_session.query(TrainerSchedule).filter_by(trainer_id=trainer.id).all()
+        return render_template('trainer_page.html', title='Бронирование', reservation=reservation, trainer=trainer,
+                               trainer_schedule=trainer_schedule)
     if request.method == 'POST':
-        return 'Reservation created'
+        reservation = Project_utils.db_session.query(Reservation).filter_by(id=reservation_id).first()
+        trainer = Project_utils.db_session.query(Trainer).filter_by(id=reservation.trainer_id).first()
+        trainer_schedule = Project_utils.db_session.query(TrainerSchedule).filter_by(trainer_id=trainer.id).all()
+        service_id = reservation.service_id
+        trainer_id = reservation.trainer_id
+        date = reservation.date
+        available_time = Project_utils.get_schedule_slots(trainer_id, service_id, date)
+        session['reservation_id'] = reservation_id
+        return render_template('trainer_page.html', title=trainer.name, trainer=trainer,
+                               trainer_schedule=trainer_schedule, available_time=available_time, service_id=service_id,
+                               date=date)
 
 
 @app.route('/user/checkout', methods=['GET', 'POST'])
@@ -163,7 +186,7 @@ def get_fitness_center_id_page(fitness_center_id):
     fitness_center = Project_utils.db_session.query(FitnessCenter).filter_by(id=fitness_center_id).first()
     if not fitness_center:
         return 'Fitness center not found'
-    return {'id': fitness_center.id, 'name': fitness_center.name, 'address': fitness_center.address}
+    return render_template('fitness_center.html', title=fitness_center.name, fitness_center=fitness_center)
 
 
 @app.get('/fitness_center/<int:fitness_center_id>/trainers')

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+        <div class="card text-center border-dark" style="width: 50%;">
+            <div class="card-header text-light" style="background: #336b86;"><h3>{{ fitness_center.name }}</h3></div>
+            <div class="card-body">
+                <p>{{ fitness_center.address }}</p>
+                <p>{{ fitness_center.contacts }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="/fitness_center/{{ fitness_center.id }}/trainers" class="btn btn-primary">
+                    <span><i class="fas fa-users"></i></span>
+                    <span>Тренера</span>
+                </a>
+                <a href="/fitness_center/{{ fitness_center.id }}/services" class="btn btn-primary">
+                    <span><i class="fas fa-list"></i></span>
+                    <span>Услуги</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
